@@ -10,18 +10,23 @@ class Checker : public QObject
 public:
     explicit Checker(QObject *parent = nullptr);
 
-    //! Функция проверки и чистки строки номера телефона
+    /*! \brief Функция проверки и чистки строки номера телефона
+     *  \param number строка с номером телефона
+     *  \return true если строка с номером телефона содержит только цифры, false в противном случае
+     */
     static bool checkNumber(QString& number);
 
-    //! Функция проверки и чистки строки текста
+    /*! \brief Функция проверки и чистки строки текста
+     *  \param text строка с текстом
+     *  \return true если строка с текстом содержит только цифры, false в противном случае
+     */
     static bool checkText(QString& text);
 
-    //! Функция проверки и чистки строки числового кода
+    /*! \brief Функция проверки и чистки строки числового кода
+     *  \param text строка с числовым кодом
+     *  \return true если строка с числовым кодом содержит только цифры, false в противном случае
+     */
     static bool checkCode(QString& text);
-
-
-signals:
-
 };
 
 #endif // CHECKER_H

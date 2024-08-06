@@ -1,12 +1,12 @@
 #include "httppacket.h"
 
-HTTPPacket::HTTPPacket(QString message, QObject *parent)
-    : QObject{parent}
+HTTPPacket::HTTPPacket(QString message)
+    : QObject{nullptr}
     , _message(message)
 {
 }
 
-HTTPPacket::HTTPPacket(const HTTPPacket &old)
+HTTPPacket::HTTPPacket(const HTTPPacket &old) : QObject(nullptr)
 {
     setParent(old.parent());
 
@@ -91,14 +91,6 @@ bool HTTPPacket::parse()
             _requestString = header.at(1);
             if(!parseRequestLine(_requestString))
                 return false;
-
-            //HTTP version
-//            QString httpVersion = header.at(2);
-//            QStringList httpVersionList = httpVersion.split("//");
-//            if(httpVersionList.count() < 2 || !httpVersionList.at(0).contains("HTTP", Qt::CaseInsensitive))
-//                return false;
-
-//            _versionHttp = httpVersionList.at(1);
 
         }
         else if(line.contains("HOST:", Qt::CaseInsensitive))

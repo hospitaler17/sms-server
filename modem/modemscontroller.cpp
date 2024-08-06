@@ -92,22 +92,12 @@ QString ModemsController::getGlobalModemStatistcs()
     for(int i = 0; i < _modemsCount; ++i)
     {
 
-        qDebug().noquote() << tr("|%1| %2 | %3 | s: %4| e: %5 |")
-
-        // 1 Number
-        .arg(QString::number(i+1))
-
-        // 2 Name
-        .arg(_modemsPtrList.at(i)->getFileName().left(16))
-
-        // 3 Status
-        .arg(_statusTranslitor.value(_modemsPtrList.at(i)->status()))
-
-        // 4 Sended
-        .arg(QString::number(_modemsPtrList.at(i)->getMessageCounter()))
-
-        // 5 Errors
-        .arg(QString::number(_modemsPtrList.at(i)->getErrorCounter()));
+        qDebug().noquote() << tr("|%-3d| %-16s | %-5s | s: %-4d| e: %-4d |")
+                                  .arg(i + 1)                                                      // Number, with a minimum width of 3 characters, left-aligned
+                                  .arg(_modemsPtrList.at(i)->getFileName().left(16), 16)           // Name, truncated or padded to 16 characters, left-aligned
+                                  .arg(_statusTranslitor.value(_modemsPtrList.at(i)->status()), 5) // Status, padded to 5 characters, left-aligned
+                                  .arg(_modemsPtrList.at(i)->getMessageCounter(), 4)               // Sended, with a minimum width of 4 digits, left-aligned
+                                  .arg(_modemsPtrList.at(i)->getErrorCounter(), 4);                // Errors, with a minimum width of 4 digits, left-aligned
     }
     return text;
 }
@@ -122,7 +112,6 @@ void ModemsController::onReadyModem()
 {
     if(_queueMessages.count() > 0)
     {
-//        auto modem = qobject_cast<Modem*>(sender());
         auto pair = _queueMessages.dequeue();       
         send(pair.first, pair.second);
     }

@@ -19,8 +19,6 @@ public:
     static bool init();
 
 protected:
-
-
     static bool startNewFile();
 
     static void messageOutput(QtMsgType type, const QMessageLogContext& context, const QString& msg);

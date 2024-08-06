@@ -7,9 +7,17 @@ AdminkeyModuleWrapper::AdminkeyModuleWrapper(QObject *parent)
 
 }
 
-bool AdminkeyModuleWrapper::init()
+AdminkeyModuleWrapper::~AdminkeyModuleWrapper()
 {
-    lib->setFileName(QDir("libs").filePath("libAdminkeyModule"));
+    if(lib->isLoaded())
+        lib->unload();
+}
+
+bool AdminkeyModuleWrapper::init(QString path)
+{
+    if(path.isEmpty())
+        path = tr("libs");
+    lib->setFileName(QDir(path).filePath("libAdminkeyModule"));
 
     if (!lib->load())
     {

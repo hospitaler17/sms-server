@@ -82,6 +82,7 @@ void Modem::setStatus(const Status newStatus, const QString &number, const QStri
 
 void Modem::timerEvent(QTimerEvent *e)
 {
+    // Проверяет, является ли событие от таймера обработки ошибок
     if(e->timerId() == _timerErrorID)
     {
         killTimer(_timerErrorID);

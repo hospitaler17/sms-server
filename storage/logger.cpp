@@ -4,7 +4,6 @@ static bool isInited{false};
 static QFile* logFile;
 static QHash<QtMsgType, QString> _msgTypeDescriptor;
 static uint _maxSize;
-static bool _debugPrint {false};
 
 Logger::Logger(QObject *parent)
     : QObject{parent}
@@ -73,7 +72,7 @@ bool Logger::startNewFile()
 
 void Logger::messageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    if(logFile == nullptr && !logFile->isOpen())
+    if(logFile == nullptr || !logFile->isOpen())
         return;
 
     QString log= tr("[%1] %2: %3 %4\n")
@@ -82,7 +81,7 @@ void Logger::messageOutput(QtMsgType type, const QMessageLogContext &context, co
             .arg(context.function)
             .arg(msg);
 
-    qDebug() << QString(msg).replace("\\\\", "\\");
+    qDebug() << log;
 
     logFile->write(log.toLocal8Bit());
     logFile->flush();

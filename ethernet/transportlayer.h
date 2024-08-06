@@ -16,31 +16,32 @@ class TransportLayer : public QObject
     using QTcpServerPtr = QSharedPointer<QTcpServer>;
 
 public:
-    //! Конструктор класса транспортного уровеня
+    //! \brief Конструктор класса транспортного уровеня
     explicit TransportLayer(QObject *parent = nullptr);
 
     ~TransportLayer();
 
+    //! \brief Инициализация класса транспортного уровня
     bool init();
 
 protected slots:
-    //! На новое подключение
+    //! \brief На новое подключение
     void onNewConnection();
 
-    //! Слот на получение сообщения
+    //! \brief Слот на получение сообщения
     void onServerReadyRead();
 
-    //! Слот на отключение сокета
+    //! \brief Слот на отключение сокета
     void onDisconnection();
 
 private:
-    //! Указатель на сервер
+    //! \brief Указатель на сервер
     QSharedPointer<QTcpServer> _server;
 
-    //! Лист сокетов для обработки входящих сообщений
+    //! \brief Лист сокетов для обработки входящих сообщений
     ListTCPSocketPtr _socketList;
 signals:
-    //! Сигнал получения сообщения
+    //! \brief Сигнал получения сообщения
     void signalNewMessageReceived(QString);
 };
 
